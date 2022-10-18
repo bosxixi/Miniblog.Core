@@ -1,14 +1,14 @@
 {
-  "name": "Miniblog.Core",
-  "short_name": "Miniblog.Core",
-  "description": "A short description of the blog.",
+  "name": "Scorpio Player Blog",
+  "short_name": "SCORPIO+",
+  "description": "A Cross Platform full-feature Media Player.",
   "icons": [
     {
-      "src": "/img/icon192x192.png",
+      "src": "/img/icon180x180.png",
       "sizes": "192x192"
     },
     {
-      "src": "/img/icon512x512.png",
+      "src": "/img/icon180x180.png",
       "sizes": "512x512"
     }
   ],

@@ -22,6 +22,9 @@ namespace Miniblog.Core
     using MetaWeblogService = Miniblog.Core.Services.MetaWeblogService;
     using WmmNullLogger = WebMarkupMin.Core.Loggers.NullLogger;
 
+    /// <summary>
+    /// dotnet publish -r win-x64 -p:PublishSingleFile=true --self-contained true
+    /// </summary>
     public class Startup
     {
         public Startup(IConfiguration configuration) => this.Configuration = configuration;
@@ -33,10 +36,10 @@ namespace Miniblog.Core
                 .ConfigureWebHostDefaults(
                     webBuilder =>
                     {
-                        global::System.Console.WriteLine(9171);
+                        global::System.Console.WriteLine(9170);
                         webBuilder
                             .UseStartup<Startup>()
-                            .UseKestrel(c => { c.Listen(new System.Net.IPAddress(new byte[] { 0, 0, 0, 0 }), 9171); })
+                            .UseKestrel(c => { c.Listen(new System.Net.IPAddress(new byte[] { 0, 0, 0, 0 }), 9170); })
                             .ConfigureKestrel(options => options.AddServerHeader = false);
                     });
 
