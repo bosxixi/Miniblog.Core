@@ -33,8 +33,10 @@ namespace Miniblog.Core
                 .ConfigureWebHostDefaults(
                     webBuilder =>
                     {
+                        global::System.Console.WriteLine(9171);
                         webBuilder
                             .UseStartup<Startup>()
+                            .UseKestrel(c => { c.Listen(new System.Net.IPAddress(new byte[] { 0, 0, 0, 0 }), 9171); })
                             .ConfigureKestrel(options => options.AddServerHeader = false);
                     });
 
