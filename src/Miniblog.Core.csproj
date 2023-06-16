@@ -5,6 +5,8 @@
     <Nullable>enable</Nullable>
     <NeutralLanguage>en-US</NeutralLanguage>
     <RepositoryType>git</RepositoryType>
+    <AssemblyName>miniblogcore</AssemblyName>
+    <EnableSdkContainerSupport>true</EnableSdkContainerSupport>
   </PropertyGroup>
 
   <ItemGroup>

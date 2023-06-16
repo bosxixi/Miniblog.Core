@@ -19,6 +19,8 @@ namespace Miniblog.Core.Services
 
     public class FileBlogService : IBlogService
     {
+        public static string FileBlogServicePath => "/blog";
+        public static string FileBlogServicePathFull => Path.Combine(FileBlogServicePath, POSTS);
         private const string FILES = "files";
 
         private const string POSTS = "Posts";
@@ -33,14 +35,14 @@ namespace Miniblog.Core.Services
                 "Usage",
                 "SecurityIntelliSenseCS:MS Security rules violation",
                 Justification = "Path not derived from user input.")]
-        public FileBlogService(IWebHostEnvironment env, IHttpContextAccessor contextAccessor)
+        public FileBlogService(IHttpContextAccessor contextAccessor)
         {
-            if (env is null)
+            if (FileBlogServicePath is null)
             {
-                throw new ArgumentNullException(nameof(env));
+                throw new ArgumentNullException(nameof(FileBlogServicePath));
             }
 
-            this.folder = Path.Combine(env.WebRootPath, POSTS);
+            this.folder = Path.Combine(FileBlogServicePath, POSTS);
             this.contextAccessor = contextAccessor;
 
             this.Initialize();

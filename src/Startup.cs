@@ -4,12 +4,16 @@ namespace Miniblog.Core
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.StaticFiles;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
+    using Microsoft.Extensions.FileProviders;
     using Microsoft.Extensions.Hosting;
 
     using Miniblog.Core.Services;
+
+    using System;
 
     using WebEssentials.AspNetCore.OutputCaching;
 
@@ -48,6 +52,7 @@ namespace Miniblog.Core
         /// <remarks>This method gets called by the runtime. Use this method to configure the HTTP request pipeline.</remarks>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            Console.WriteLine("v1.0");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -64,6 +69,31 @@ namespace Miniblog.Core
                     context.Response.Headers["X-Content-Type-Options"] = "nosniff";
                     return next();
                 });
+
+
+
+            {
+                var fs = new FileServerOptions
+                {
+                    FileProvider = new PhysicalFileProvider(FileBlogService.FileBlogServicePathFull),
+                    RequestPath = "/Posts",
+                    EnableDirectoryBrowsing = true,
+                };
+                fs.StaticFileOptions.ServeUnknownFileTypes = true;
+
+                var extensionProvider = new FileExtensionContentTypeProvider();
+                extensionProvider.Mappings[".application"] = "application/x-ms-application";
+                extensionProvider.Mappings[".manifest"] = "application/x-ms-manifest";
+                extensionProvider.Mappings[".deploy"] = "application/octet-stream";
+                extensionProvider.Mappings[".msp"] = "application/octet-stream";
+                extensionProvider.Mappings[".msu"] = "application/octet-stream";
+                extensionProvider.Mappings[".vsto"] = "application/x-ms-vsto";
+                extensionProvider.Mappings[".xaml"] = "application/xaml+xml";
+                extensionProvider.Mappings[".xbap"] = "application/x-ms-xbap";
+                extensionProvider.Mappings[".exe"] = "application/vnd.microsoft.portable-executable";
+                fs.StaticFileOptions.ContentTypeProvider = extensionProvider;
+                app.UseFileServer(fs);
+            }
 
             app.UseStatusCodePagesWithReExecute("/Shared/Error");
             app.UseWebOptimizer();
