@@ -63,6 +63,7 @@ namespace Miniblog.Core
                 app.UseHsts();
             }
 
+
             app.Use(
                 (context, next) =>
                 {
@@ -125,6 +126,7 @@ namespace Miniblog.Core
         /// <remarks>This method gets called by the runtime. Use this method to add services to the container.</remarks>
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplicationInsightsTelemetry();
             services.AddControllersWithViews();
             services.AddRazorPages();
 
