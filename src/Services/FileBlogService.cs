@@ -199,6 +199,26 @@ namespace Miniblog.Core.Services
             {
                 await writer.WriteAsync(bytes, 0, bytes.Length).ConfigureAwait(false);
             }
+            try
+            {
+                Console.WriteLine("replacing...");
+                var alltext = File.ReadAllText(absolute);
+                if (alltext.Contains("http://192.168.1.205:9170"))
+                {
+                    var replaced = alltext.Replace("http://192.168.1.205:9170", "https://blog.scorpioplayer.com");
+                    await File.WriteAllTextAsync(absolute, replaced);
+                    Console.WriteLine("replaced");
+                }
+                else
+                {
+                    Console.WriteLine("nothing to replace");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{absolute}: {ex.Message}");
+            }
+
 
             return $"/{POSTS}/{FILES}/{fileNameWithSuffix}";
         }
