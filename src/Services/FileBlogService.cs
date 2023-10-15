@@ -15,6 +15,7 @@ namespace Miniblog.Core.Services
     using System.Text.RegularExpressions;
     using System.Threading;
     using System.Threading.Tasks;
+    using System.Xml;
     using System.Xml.Linq;
     using System.Xml.XPath;
 
@@ -224,6 +225,14 @@ namespace Miniblog.Core.Services
                 props[nameof(post.Excerpt)] = post.Excerpt;
                 props[nameof(post.IsPublished)] = post.IsPublished.ToString();
                 props[nameof(post.Content)] = post.Content;
+
+                if (post.Content.Contains("http://192.168.1.205:9170"))
+                {
+                    props["ContentStep1"] = "contains 9170";
+                    post.Content = post.Content;
+                    props[nameof(post.Content) + "Modified"] = post.Content;
+                    props["ContentStep2"] = "replaced";
+                }
 
 
                 var filePath = this.GetFilePath(post);

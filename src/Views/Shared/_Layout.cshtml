@@ -1,3 +1,4 @@
+@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
 @inject IOptionsSnapshot<BlogSettings> settings
 @inject WebManifest manifest
 @{
@@ -10,7 +11,7 @@
     <title>@ViewData[Constants.Title]</title>
     <meta name="description" content="@ViewData[Constants.Description]" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    @Html.Raw(JavaScriptSnippet.FullScript)
     <link rel="preload" href="~/js/site.js" as="script" />
     <link rel="preload" href="~/css/belowthefold.scss" as="style" />
     <noscript><link rel="stylesheet" href="~/css/belowthefold.scss" /></noscript>
