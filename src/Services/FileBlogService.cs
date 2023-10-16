@@ -228,10 +228,8 @@ namespace Miniblog.Core.Services
 
                 if (post.Content.Contains("http://192.168.1.205:9170"))
                 {
-                    props["ContentStep1"] = "contains 9170";
-                    post.Content = post.Content;
+                    post.Content = post.Content.Replace("http://192.168.1.205:9170", "https://blog.scorpioplayer.com");
                     props[nameof(post.Content) + "Modified"] = post.Content;
-                    props["ContentStep2"] = "replaced";
                 }
 
 
@@ -283,31 +281,8 @@ namespace Miniblog.Core.Services
                     await doc.SaveAsync(fs, SaveOptions.None, CancellationToken.None).ConfigureAwait(false);
                 }
 
-                try
-                {
-                    props["Step1"] = "replacing";
-                    var alltext = File.ReadAllText(filePath);
-                    if (alltext.Contains("http://192.168.1.205:9170"))
-                    {
-                        props["Step2"] = "contains 9170";
-                        var replaced = alltext.Replace("http://192.168.1.205:9170", "https://blog.scorpioplayer.com");
-                        await File.WriteAllTextAsync(filePath, replaced);
-                        props["Step3"] = "replaced";
-                    }
-                    else
-                    {
-                        props["Step5"] = "nothing to replace";
-                    }
-                }
-                catch (Exception ex)
-                {
-                    props["Step6"] = $"{filePath}: {ex.Message}";
-                }
-
                 if (!this.cache.Contains(post))
                 {
-                    props["Step7"] = $"AddCache";
-                    props["IsAdmin"] = IsAdmin().ToString();
                     this.cache.Add(post);
                     this.SortCache();
                 }
